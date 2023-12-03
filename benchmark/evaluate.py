@@ -16,6 +16,9 @@ TRAIN_DATA = Dataset.load_from_df(
     READER).build_full_trainset()
 
 def make_prediction(uid, model, num=5):
+    '''
+    Function gives the arbitrary number of the films recommended to the user
+    '''
     predictions = []
     for ii in TRAIN_DATA.all_items():
         ii = TRAIN_DATA.to_raw_iid(ii)
@@ -23,6 +26,9 @@ def make_prediction(uid, model, num=5):
     return [x.iid for x in sorted(predictions, key=lambda x: x.est, reverse=True)[:num]]
 
 def load_eval_data():
+    '''
+    Loading the evaluation dataset for testing the model
+    '''
     data = pd.read_csv('data/test_data.csv', header=0, sep='\t')
     
     sup_data = Dataset.load_from_df(data, READER)
@@ -44,7 +50,7 @@ if __name__ == "__main__":
     accuracy.mse(predictions)
     accuracy.mae(predictions)
 
-    user_id = 300
+    user_id = 300 # You can put here different user to see test it for different users
     print()
     print(f"Predicted sample of top 5 films for user {user_id}")
     print(make_prediction(user_id, model))
