@@ -5,10 +5,10 @@
 A recommender system is a type of information filtering system that suggests items or content to users based on their interests, preferences, or past behavior. These systems are commonly used in various domains, such as e-commerce, entertainment, social media, and online content platforms.
 
 Your assignment is to create a recommender system of movies for users:
-* Your system should suggest some movies to the user based on user's gemographic information(age, gender, occupation, zip code) and favorite movies (list of movie ids).
+* Your system should suggest some movies to the user based on their ratings.
 * Solve this task using a machine learning model. You may consider only one model: it will be enough.
 * Create a benchmark that would evaluate the quality of recommendations of your model. Look for commonly used metrics to evaluate a recommender system and use at least one metric.
-* Make a single report decribing data exploration, solution implementation, training process, and evaluation on the benchmark.
+* Make a single report describing data exploration, solution implementation, training process, and evaluation on the benchmark.
 * Explicitly state the benchmark scores of your systems.
 
 Submission should be a link to GitHub repository. It should be open repository, so that the instructors could assess it easily.
@@ -38,7 +38,7 @@ In this assignment you will use [MovieLens 100K dataset](https://grouplens.org/d
 | allbut.pl | The script that generates training and test sets where all but n of a users ratings are in the training data |
 | mku.sh | A shell script to generate all the u data sets from u.data. |
 
-## Evaluation criterias
+## Evaluation criteria
 
 The repository should have the following structure:
 
@@ -94,7 +94,7 @@ In the `reports` directory create a report about your work. In the report, descr
 
 In the `notebooks` directory put at least two notebooks. **First notebook** should contain your initial data exploration and basic ideas behind data preprocessing. **Second notebook** should contain information about final solution training and visualization.
 
-## Grading criterias
+## Grading criteria
 
 Full assignment without any problems is said to be the `100%` solution.
 
@@ -105,6 +105,6 @@ Full assignment without any problems is said to be the `100%` solution.
 | Solution building | 40 |  Implementation description, references, final report structure |
 | Final score, evaluation  | 20 | Evaluation function, final score, quality of results |
 
-If **PMLDL Course Team** will have any questions about your assignment or your work fails to show your results you will be called solution defence procedure. 
+If **PMLDL Course Team** will have any questions about your assignment or your work fails to show your results you will be called solution defense procedure. 
 
 
