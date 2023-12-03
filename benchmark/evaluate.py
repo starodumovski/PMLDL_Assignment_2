@@ -2,25 +2,49 @@ import pandas as pd
 import numpy as np
 
 import os
-import sys
 
 from surprise import Reader, Dataset
-from surprise.model_selection import train_test_split
 from surprise import accuracy, dump
 np.random.seed(42)
 
 CUR_FILE_FOLDER = os.path.dirname(os.path.abspath(__file__))
 ROOT_FOLDER = os.path.join(CUR_FILE_FOLDER, '..')
 
-# sys.path.insert(0, os.path.join(ROOT_FOLDER, 'models'))
+READER = Reader(rating_scale=(1,5))
+TRAIN_DATA = Dataset.load_from_df(
+    pd.read_csv(os.path.join('..', 'data', 'interim', 'train_data.csv'), header=0, sep='\t'),
+    READER).build_full_trainset()
 
 def make_prediction(uid, model, num=5):
     predictions = []
-    for ii in train_data.all_items():
-        ii = train_data.to_raw_iid(ii)
+    for ii in TRAIN_DATA.all_items():
+        ii = TRAIN_DATA.to_raw_iid(ii)
         predictions.append(model.predict(uid, ii, verbose = False))
     return [x.iid for x in sorted(predictions, key=lambda x: x.est, reverse=True)[:num]]
 
+def load_eval_data():
+    data = pd.read_csv('data/test_data.csv', header=0, sep='\t')
+    
+    sup_data = Dataset.load_from_df(data, READER)
+    return sup_data.construct_testset(sup_data.raw_ratings)
+
 
 if __name__ == "__main__":
+    print('Loading the model...')
     _, model = dump.load(os.path.join(ROOT_FOLDER, 'models', 'surprise_svd'))
+
+    print('Loading the test data...')
+    eval_data = load_eval_data()
+
+    print("\n###################TESTING###################\n")
+
+    predictions = model.test(eval_data, verbose=0)
+    print("Accuracy scores:")
+    accuracy.rmse(predictions)
+    accuracy.mse(predictions)
+    accuracy.mae(predictions)
+
+    user_id = 300
+    print()
+    print(f"Predicted sample of top 5 films for user {user_id}")
+    print(make_prediction(user_id, model))
